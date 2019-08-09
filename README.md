@@ -1,16 +1,18 @@
 ## MKS-TFT-V4-alt-fw
 
 mks-tft-32-v4-bootrom.bin 
-'''For V4 Hardware, V3.0.0 software bootrom , Flash to 0x8000000 using stlink/jtag/bmp, then flash MKSTFT28.BIN via SD card'''
-MKS-TFT32-factory-boot.bin''' For V1/V2 Hardware with LCD Driver ID:9320, TFT28 '''
-TFT_32_v3.0.3.rar '''The additional flash files fir V4 hardware including fonts, icons, firmware for flashing after bootrom (0x8007000)
+For V4 Hardware, V3.0.0 software bootrom , Flash to 0x8000000 using stlink/jtag/bmp, then flash MKSTFT28.BIN via SD card
+MKS-TFT32-factory-boot.bin
+For V1/V2 Hardware with LCD Driver ID:9320, TFT28
+TFT_32_v3.0.3.rar 
+The additional flash files fir V4 hardware including fonts, icons, firmware for flashing after bootrom (0x8007000)
 Can be flashed via SDCARD , filename MKSTFT28.BIN in root is file flashed, does not examine the data on filename'''
 						
 Additional files
 Stm32Duino variant files and boards.txt 
 
 boards.txt additions
-
+```
 MKSTFT_F107VC test mkstft
 Genericflight.menu.pnum.MKSTFT_F107VC=MKS TFT32 V4
 Genericflight.menu.pnum.MKSTFT_F107VC.upload.maximum_size=262144
@@ -37,3 +39,4 @@ Genericflight.menu.upload_method.dfuoMethod.upload.usbID=1EAF:0003
 Genericflight.menu.upload_method.dfuoMethod.upload.altID=1
 Genericflight.menu.upload_method.dfuoMethod.build.flash_offset=0x7000
 Genericflight.menu.upload_method.dfuoMethod.build.bootloader_flags=-DBL_LEGACY_LEAF -DVECT_TAB_OFFSET={build.flash_offset}
+```
