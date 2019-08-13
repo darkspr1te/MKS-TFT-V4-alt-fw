@@ -3,12 +3,12 @@ This is not firmware to provide original functionality, reflash MKS firmware if 
 This firmware is a Bring up of the board to enable the board to be used in new unforseen ways,
 
 ```
-__mks-tft-32-v4-bootrom.bin __
+**mks-tft-32-v4-bootrom.bin**
  - For V4 Hardware, V3.0.0 software bootrom , Flash to 0x8000000 using stlink/jtag/bmp, then flash MKSTFT28.BIN via SD card
 
-__MKS-TFT32-factory-boot.bin__
+**MKS-TFT32-factory-boot.bin**
  - For V1/V2 Hardware with LCD Driver ID:9320, TFT28
-__TFT_32_v3.0.3.rar __
+**TFT_32_v3.0.3.rar**
  - The additional flash files fir V4 hardware including fonts, icons, firmware for flashing after bootrom (0x8007000)
 	Can be flashed via SDCARD , filename MKSTFT28.BIN in root is file flashed, does not examine the data on filename'''
 ```	
