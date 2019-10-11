@@ -1,6 +1,13 @@
 ## MKS-TFT-V4-alt-fw
-This is not firmware to provide original functionality, reflash MKS firmware if you wish to use with Marlin.
+**This firmware source code provided here is not for Marlin/3d printer usage**
+**pre-compiled .bin files provided are to restore factory funtionality only**
+
+This is not firmware to provide original functionality but reuse the MKS board for a totally different purpose, 
+reflash MKS firmware if you wish to use with Marlin.(original factory bootloader provided below)
 This firmware is a Bring up of the board to enable the board to be used in new unforseen ways,
+Listed below however are the original factory bootloaders for those that may have erased them. I have tested them on my own boards and confirm they work on a blank board, you are still required to flash the latest *firmware* for your device after via the sd-card for full original functionality. 
+Thanks to https://github.com/delwinbest for pointing out my readme's poor explination, Hopefully these additions will clarify the difference between factory bootloader, factory firmware & my firmware and bootloaders. 
+
 
 ```
 **mks-tft-32-v4-bootrom.bin**
