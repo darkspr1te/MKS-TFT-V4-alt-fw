@@ -1,5 +1,7 @@
 ## MKS-TFT-V4-alt-fw
 **This firmware source code provided here is not for Marlin/3d printer usage**
+
+## MKS-TFT Bootloaders
 **pre-compiled .bin files provided are to restore factory funtionality only**
 
 This is not firmware to provide original functionality but reuse the MKS board for a totally different purpose, 
@@ -16,7 +18,7 @@ Thanks to https://github.com/delwinbest for pointing out my readme's poor explin
 **MKS-TFT32-factory-boot.bin**
  - For V1/V2 Hardware with LCD Driver ID:9320, TFT28
 **TFT_32_v3.0.3.rar**
- - The additional flash files fir V4 hardware including fonts, icons, firmware for flashing after bootrom (0x8007000)
+ - The additional flash files for V4 hardware including fonts, icons, firmware for flashing after bootrom (0x8007000)
 	Can be flashed via SDCARD , filename MKSTFT28.BIN in root is file flashed, does not examine the data on filename'''
 ```	
 	
@@ -43,7 +45,7 @@ if you intend to use full flash etc and not use Makerbase bootloader then also a
 
 
 
-and i compile using maple upload method and then copy bin file to sdcard
+and i compile using maple upload method and then copy compiled bin bin file to sdcard( in linux it's /tmp/arduino_build_xxxxx/filename.bin)
 ```
 Genericflight.menu.upload_method.dfuoMethod=Maple DFU Bootloader original
 Genericflight.menu.upload_method.dfuoMethod.upload.protocol=maple
