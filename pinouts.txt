@@ -1,0 +1,19 @@
+*Wifi
+Serial1 
+*Jtag
+
+*SD Card Built In
+
+*SDIO port
+
+*Aux-1
+
+*PB0
+ 
+*PB1
+
+*PB4
+
+*PB5
+
+*LCD Data Port E
