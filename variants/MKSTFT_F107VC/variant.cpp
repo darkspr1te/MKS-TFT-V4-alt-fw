@@ -76,7 +76,11 @@ const PinName digitalPin[] = {
   PB_9,  //D34 - USB DISC
   PD_14,//D35 LCD Backlight
   PD_15,//D36 LCD RS
-  PC_8,//D36 LCD CS
+  PC_8,//D37 LCD CS
+  PC_5,//D38 Touch input IRQ
+  PD_11,//D39 SDCARD chip select 
+  PD_15,//D40 LCD_RD
+  PC_12,//D41 unknown yet
   // Duplicated pins to avoid issue with analogRead
   // A0 have to be greater than NUM_ANALOG_INPUTS
   PB_0,  //D35/A0 = D3

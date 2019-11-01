@@ -1,26 +1,27 @@
-add 
+in your arduino IDE add 
 https://github.com/stm32duino/BoardManagerFiles/raw/master/STM32/package_stm_index.json
 to additional board manager URLS and then add stm32 board from board manager if you dont have current stm32 duino installed
 
 
 add the board to boards.txt , normally located in 
 C:\Users\USER_NAME\AppData\Local\Arduino15\packages\STM32\hardware\stm32\1.7.0\boards.txt
-user the text in board_additions.txt and add to boards.txt un generic flight menu section , around line 1235 on v 1.7.0 
+user the text in board_additions.txt and add to boards.txt un generic flight menu section , around line #1235 on v1.7.0 of stm32duino 
 
-the ver 1.7.0 may change.
+the ver 1.7.0 may change, be warned line numbers also.
 
 copy the MKSTFT_F107VC folder to variants folder ,
 normally located in 
 C:\Users\USER_NAME\AppData\Local\Arduino15\packages\STM32\hardware\stm32\1.7.0\variants
 
 select blink test app
-if you have stm build tools installed select swd as programmer or it will error in build
+if you have stm build tools installed select swd as programmer 
 if you dont have stmb32tools use bmp(black magic probe) as build option  
 
-compile , copy the rsulting bin file to sd-card, rename to mkstft28.bin
+compile , copy the resulting bin file to sd-card, rename to mkstft28.bin
 normally the bin file is in 
 C:\Users\USERNAME\AppData\Local\Temp\arduino_build_1234567
 
 insert sd card in device and power up
+profit!
 
 

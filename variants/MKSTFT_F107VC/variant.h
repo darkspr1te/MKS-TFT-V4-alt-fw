@@ -80,6 +80,10 @@ extern "C" {
 #define PD14 35//LCD_LED
 #define PD15 36//LCD RS
 #define PC8 37//LCD CS
+#define PC5 38//Touch IRQ
+#define PD11 39 //SDCARD Chip Select
+#define PD15 40//LCD_RD 
+#define PC12 41//unknown yet
 
 
 #define LCD_LED PD14
@@ -89,13 +93,19 @@ extern "C" {
 #define LCD_WR PB14
 #define LCD_RS PD15
 #define LCD_CS PC8
+#define LCD_RD PD15
 #define SDCARD_CS PD11
 #define SDCARD_DT PB15
 #define TOUCH_DI PC5
 #define TOUCH_CS PC9
 #define WIFI_DI PA9
 #define FLASH_CS PB9
-
+#define LCD_TOUCH_INPUT TOUCH_DI
+#define LCD_BACKLIGHT_PIN LCD_LED
+#define SDCARD_STATE SDCARD_DT
+#define FILIMENT_Pin FILIMENT
+#define POWER_Pin POWER
+#define EEPROM_CS PIN_SPI2_SS
 
 // This must be a literal
 #define NUM_DIGITAL_PINS        44
@@ -119,6 +129,12 @@ extern "C" {
 #define PIN_SPI1_MOSI            PB5
 #define PIN_SPI1_MISO            PB4
 #define PIN_SPI1_SCK             PB3
+
+// SPI2 Definitions
+#define PIN_SPI2_SS              PB12
+#define PIN_SPI2_MOSI            PB15
+#define PIN_SPI2_MISO            PB14
+#define PIN_SPI2_SCK             PB13
 
 #define PIN_SPI_SS              PB12
 #define PIN_SPI_MOSI            PB15

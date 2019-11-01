@@ -1,5 +1,5 @@
 *Wifi
-Serial1 
+Serial1 Uart
 *Jtag
 
 *SD Card Built In
@@ -7,7 +7,7 @@ Serial1
 *SDIO port
 
 *Aux-1
-
+Serial Uart 
 *PB0
  
 *PB1
