@@ -128,10 +128,10 @@ extern "C" {
 #define LED_RED  PB1
 
 // SPI Definitions
-#define PIN_SPI0_SS              PA4
-#define PIN_SPI0_MOSI            PA7
-#define PIN_SPI0_MISO            PA6
-#define PIN_SPI0_SCK             PA5
+#define PIN_SPI_SS              PA4
+#define PIN_SPI_MOSI            PA7
+#define PIN_SPI_MISO            PA6
+#define PIN_SPI_SCK             PA5
 
 // SPI Definitions
 #define PIN_SPI1_SS              PA15
@@ -145,16 +145,11 @@ extern "C" {
 #define PIN_SPI2_MISO            PB14
 #define PIN_SPI2_SCK             PB13
 
-#define PIN_SPI_SS              PB12
-#define PIN_SPI_MOSI            PB15
-#define PIN_SPI_MISO            PB14
-#define PIN_SPI_SCK             PB13
-/*
- *  #define SDCARD_nCS_Pin          GPIO_PIN_11
- #define SDCARD_nCS_GPIO_Port    GPIOD
- #define SDCARD_DETECT_Pin       GPIO_PIN_15
- #define SDCARD_DETECT_GPIO_Port GPIOB
- */
+#define PIN_SPI0_SS              PB12
+#define PIN_SPI0_MOSI            PB15
+#define PIN_SPI0_MISO            PB14
+#define PIN_SPI0_SCK             PB13
+
   
 // I2C Definitions
 #define PIN_WIRE_SDA            PB7
@@ -176,14 +171,7 @@ extern "C" {
 
 // USB
 #define USB_DISC_PIN            PB9
-/*
-#define SPEAKER_Pin             GPIO_PIN_2
-#define SPEAKER_GPIO_Port       GPIOA
-#define SDCARD_nCS_Pin          GPIO_PIN_11
-#define SDCARD_nCS_GPIO_Port    GPIOD
-#define FLASH_nCS_Pin           GPIO_PIN_9
-#define FLASH_nCS_GPIO_Port     GPIOB
-*/
+
 //#define MAIN_PR_OFFSET 0x8000
 //#define HSE_VALUE               25000000U /*!< Default value of the External oscillator in Hz.*/
 //#define VECT_TAB_SRAM 1
