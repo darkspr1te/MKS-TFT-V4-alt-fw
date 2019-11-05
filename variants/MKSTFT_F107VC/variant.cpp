@@ -75,12 +75,22 @@ const PinName digitalPin[] = {
   PB_1,  //D33 - LED
   PB_9,  //D34 - USB DISC
   PD_14,//D35 LCD Backlight
-  PD_15,//D36 LCD RS
+  PD_15,//D36 LCD RD
   PC_8,//D37 LCD CS
   PC_5,//D38 Touch input IRQ
   PD_11,//D39 SDCARD chip select 
   PD_15,//D40 LCD_RD
   PC_12,//D41 unknown yet
+  PE_0,//D42 Port E Bit 0
+  PE_1,//D43 Port E Bit 1
+  PE_2,//D44 Port E Bit 2
+  PE_3,//D45 Port E Bit 3
+  PE_4,//D46 Port E Bit 4
+  PE_5,//D47 Port E Bit 5
+  PE_6,//D48 Port E Bit 6
+  PD_13,//D50 LCD_RS
+  PE_7,//D49 Port E Bit 7
+
   // Duplicated pins to avoid issue with analogRead
   // A0 have to be greater than NUM_ANALOG_INPUTS
   PB_0,  //D35/A0 = D3
@@ -150,7 +160,23 @@ __disable_irq();
 //HAL_SuspendTick();
 */
 }
+void initVariant(void)
+{
 
+  GPIO_InitTypeDef GPIO_InitStruct;
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOE, 0xffff, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : Pin1_Pin Pin2_Pin */
+  GPIO_InitStruct.Pin = 0xffff;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);	
+}
 void initVariant_old(void)
 {
 	

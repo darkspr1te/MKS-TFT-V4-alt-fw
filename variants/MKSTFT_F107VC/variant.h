@@ -78,12 +78,21 @@ extern "C" {
 #define PB9  34 // USB DISC
 
 #define PD14 35//LCD_LED
-#define PD15 36//LCD RS
+#define PD15 36//LCD RD
 #define PC8 37//LCD CS
 #define PC5 38//Touch IRQ
 #define PD11 39 //SDCARD Chip Select
 #define PD15 40//LCD_RD 
 #define PC12 41//unknown yet
+#define PE0 42
+#define PE1 43
+#define PE2 44
+#define PE3 45
+#define PE4 46
+#define PE5 47
+#define PE6 48
+#define PD13 49 //LCD_RS
+#define PE7 50
 
 
 #define LCD_LED PD14
@@ -91,7 +100,7 @@ extern "C" {
 #define FILIMENT PB0
 #define POWER PB1
 #define LCD_WR PB14
-#define LCD_RS PD15
+#define LCD_RS PD13
 #define LCD_CS PC8
 #define LCD_RD PD15
 #define SDCARD_CS PD11
@@ -108,7 +117,7 @@ extern "C" {
 #define EEPROM_CS PIN_SPI2_SS
 
 // This must be a literal
-#define NUM_DIGITAL_PINS        44
+#define NUM_DIGITAL_PINS        50
 // This must be a literal with a value less than or equal to to MAX_ANALOG_INPUTS
 #define NUM_ANALOG_INPUTS       9
 #define NUM_ANALOG_FIRST        35

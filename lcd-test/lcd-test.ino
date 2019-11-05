@@ -1,29 +1,16 @@
-// UTFT_Demo_400x240 
-// Copyright (C)2015 Rinky-Dink Electronics, Henning Karlsen. All right reserved
-// web: http://www.RinkyDinkElectronics.com/
-//
-// This program is a demo of how to use most of the functions
-// of the library with a supported display modules.
-//
-// This demo was made for modules with a screen resolution 
-// of 4000x240 pixels.
-//
-// This program requires the UTFT library.
-// tested    by huawei<huaweiwx@sina.com> 2016.12.20
+
 //    spfd5420
 
-#include <UTFT.h>
+#include "UTFT.h"
+#include "memorysaver.h"
 
 extern uint8_t SmallFont[];
 
-
 #define WITCH 400
-
 
 //UTFT lcdthingyname(byte model, int RS, int WR, int CS, int RST, int SER)
 UTFT myGLCD(HX8353C,LCD_RS,LCD_WR,LCD_CS,0);
 #define LED LED_BUILTIN
-
 
 void setup()
 {
