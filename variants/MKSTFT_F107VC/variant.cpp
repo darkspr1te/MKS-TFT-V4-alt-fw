@@ -29,7 +29,7 @@
  */
 #include "pins_arduino.h"
 #include "stm32f1xx_hal.h"
-
+#include "stdio.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -88,8 +88,14 @@ const PinName digitalPin[] = {
   PE_4,//D46 Port E Bit 4
   PE_5,//D47 Port E Bit 5
   PE_6,//D48 Port E Bit 6
-  PD_13,//D50 LCD_RS
-  PE_7,//D49 Port E Bit 7
+  PD_13,//D49 LCD_RS
+  PC_9,//D50 TOUCH_CS
+  PE_7,//D51 Port E Bit 7
+  PC_10,//D52 
+  PC_11,//D53
+  PC_12,//D54
+  PC_13,//D55
+  
 
   // Duplicated pins to avoid issue with analogRead
   // A0 have to be greater than NUM_ANALOG_INPUTS
@@ -201,46 +207,8 @@ __HAL_DBGMCU_FREEZE_WWDG();
 //MX_GPIO_Init();
 }
 
-void WWDG_IRQHandler_exp(void)
-{
-   
-    //WWDG_ClearFlag();    /*Remove pre wakeup interrupt flag*/
-    __HAL_RCC_CLEAR_RESET_FLAGS(); 
-    
-    //LED1 = ~LED1;         /*LED state turnover */
-}
 
-void WWDG_IRQHandler(void)
-{
-  /* USER CODE BEGIN BusFault_IRQn 0 */
-
-  /* USER CODE END BusFault_IRQn 0 */
-  //while (1)
- // {
- // }
- WWDG_IRQHandler_exp();
-  /* USER CODE BEGIN BusFault_IRQn 1 */
-
-  /* USER CODE END BusFault_IRQn 1 */
-}
-void HardFault_Handler(void)
-{
-  __asm volatile (
-    " movs r0,#4       \n"
-    " movs r1, lr      \n"
-    " tst r0, r1       \n"
-    " beq _MSP         \n"
-    " mrs r0, psp      \n"
-    " b _HALT          \n"
-  "_MSP:               \n"
-    " mrs r0, msp      \n"
-  "_HALT:              \n"
-    " ldr r1,[r0,#20]  \n"
-    " bkpt #0          \n"
-  );
-}
-
-WEAK void SystemInit_B (void)
+WEAK void SystemInit_b (void)
 {
   /* Reset the RCC clock configuration to the default reset state(for debug purpose) */
   /* Set HSION bit */
@@ -249,7 +217,7 @@ WEAK void SystemInit_B (void)
 
   /* Reset SW, HPRE, PPRE1, PPRE2, ADCPRE and MCO bits */
 #if !defined(STM32F105xC) && !defined(STM32F107xC)
-  RCC->CFGR &= (uint32_t)0xF0FF0000;
+  RCC->CFGR &= (uint32_t)0xF8FF0000;
 #else
   RCC->CFGR &= (uint32_t)0xF0FF0000;
 #endif /* STM32F105xC */
@@ -438,8 +406,10 @@ tmp=0x4;
 
 
 
-WEAK void SystemClock_Config(void)
+void SystemClock_Config(void)
 {
+	WWDG->SR = 0;
+	
     RCC_OscInitTypeDef RCC_OscInitStruct;
     RCC_ClkInitTypeDef RCC_ClkInitStruct;
 #if defined(STM32F107xC) && defined(MKS_TFT)
@@ -489,7 +459,97 @@ WEAK void SystemClock_Config(void)
 
 
 
+void WWDG_IRQHandler(void)
+{
+  /* USER CODE BEGIN BusFault_IRQn 0 */
 
+  /* USER CODE END BusFault_IRQn 0 */
+  //while (1)
+ // {
+ // }
+__HAL_RCC_CLEAR_RESET_FLAGS(); 
+  /* USER CODE BEGIN BusFault_IRQn 1 */
+
+  /* USER CODE END BusFault_IRQn 1 */
+}
+
+#if defined(STM32F107xC) && defined(MKS_TFT)
+/**
+* @brief This function handles EXTI line0 interrupt.
+*/
+void WWDG_IRQHandler_exp(void)
+{
+   
+    //WWDG_ClearFlag();    /*Remove pre wakeup interrupt flag*/
+    __HAL_RCC_CLEAR_RESET_FLAGS(); 
+    
+    //LED1 = ~LED1;         /*LED state turnover */
+}
+void hard_fault_handler_c (unsigned int * hardfault_args)
+{
+unsigned int stacked_r0;
+  unsigned int stacked_r1;
+  unsigned int stacked_r2;
+  unsigned int stacked_r3;
+  unsigned int stacked_r12;
+  unsigned int stacked_lr;
+  unsigned int stacked_pc;
+  unsigned int stacked_psr;
+ 
+  stacked_r0 = ((unsigned long) hardfault_args[0]);
+  stacked_r1 = ((unsigned long) hardfault_args[1]);
+  stacked_r2 = ((unsigned long) hardfault_args[2]);
+  stacked_r3 = ((unsigned long) hardfault_args[3]);
+ 
+  stacked_r12 = ((unsigned long) hardfault_args[4]);
+  stacked_lr = ((unsigned long) hardfault_args[5]);
+  stacked_pc = ((unsigned long) hardfault_args[6]);
+  stacked_psr = ((unsigned long) hardfault_args[7]);
+  
+  printf ("\n\n[Hard fault handler - all numbers in hex]\r\n");
+  printf ("R0 = %x\r\n", stacked_r0);
+  printf ("R1 = %x\r\n", stacked_r1);
+  printf ("R2 = %x\r\n", stacked_r2);
+  printf ("R3 = %x\r\n", stacked_r3);
+  printf ("R12 = %x\r\n", stacked_r12);
+  printf ("LR [R14] = %x  subroutine call return address\r\n", stacked_lr);
+  printf ("PC [R15] = %x  program counter\r\n", stacked_pc);
+  printf ("PSR = %x\r\n", stacked_psr);
+  printf ("BFAR = %x\r\n", (*((volatile unsigned long *)(0xE000ED38))));
+  printf ("CFSR = %x\r\n", (*((volatile unsigned long *)(0xE000ED28))));
+  printf ("HFSR = %x\r\n", (*((volatile unsigned long *)(0xE000ED2C))));
+  printf ("DFSR = %x\r\n", (*((volatile unsigned long *)(0xE000ED30))));
+  printf ("AFSR = %x\r\n", (*((volatile unsigned long *)(0xE000ED3C))));
+  printf ("SCB_SHCSR = %x\r\n", SCB->SHCSR);
+  
+  while (1);
+}
+
+void HardFault_Handler(void)
+{
+	
+	__asm volatile (
+		"tst LR, #4       \n"
+		"ite EQ       \n"
+		"mrseq R0,MSP       \n"
+		"mrsne R0, PSP       \n"
+		"b hard_fault_handler_c \n"
+		);
+	
+  __asm volatile (
+    " movs r0,#4       \n"
+    " movs r1, lr      \n"
+    " tst r0, r1       \n"
+    " beq _MSP         \n"
+    " mrs r0, psp      \n"
+    " b _HALT          \n"
+  "_MSP:               \n"
+    " mrs r0, msp      \n"
+  "_HALT:              \n"
+    " ldr r1,[r0,#20]  \n"
+    " bkpt #0          \n"
+  );
+}
 
 
 void NMI_Handler(void)
@@ -566,16 +626,11 @@ void TIM1_TRG_COM_IRQHandler(void)
 
   /* USER CODE END TIM2_IRQn 0 */
 
- // HAL_TIM_IRQHandler(&htim2);
+  //HAL_TIM_IRQHandler(&htim2);
   /* USER CODE BEGIN TIM2_IRQn 1 */
 
   /* USER CODE END TIM2_IRQn 1 */
 }
-
-#if defined(STM32F107xC) && defined(MKS_TFT)
-/**
-* @brief This function handles EXTI line0 interrupt.
-*/
 
 void PendSV_Handler(void)
 {

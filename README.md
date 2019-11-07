@@ -17,6 +17,10 @@ Files contained here:-
 lcd-test - Basic lcd test , landscape , original code from UTFT lib
 
 
+Working :-
+LCD, Buzzer, SDCARD, Touch screen, EEPROM, flash, UART1/2 
+*Does not need bootloader any more, faster development flashing via SWD 
+
 
 To Do:-
 fix LCD init code, add additional pins to variant.h 

@@ -92,9 +92,15 @@ extern "C" {
 #define PE5 47
 #define PE6 48
 #define PD13 49 //LCD_RS
-#define PE7 50
+#define PC9 50//TOUCH_CS
+#define PE7 51//PE7
+#define PC10 52
+#define PC11 53
+#define PC12 54
+#define PC13 55
 
 
+#define TOUCH_SCK PC10
 #define LCD_LED PD14
 #define SPEAKER PA2
 #define FILIMENT PB0
@@ -117,7 +123,7 @@ extern "C" {
 #define EEPROM_CS PIN_SPI2_SS
 
 // This must be a literal
-#define NUM_DIGITAL_PINS        50
+#define NUM_DIGITAL_PINS        55
 // This must be a literal with a value less than or equal to to MAX_ANALOG_INPUTS
 #define NUM_ANALOG_INPUTS       9
 #define NUM_ANALOG_FIRST        35
@@ -134,16 +140,16 @@ extern "C" {
 #define PIN_SPI_SCK             PA5
 
 // SPI Definitions
-#define PIN_SPI1_SS              PA15
-#define PIN_SPI1_MOSI            PB5
-#define PIN_SPI1_MISO            PB4
-#define PIN_SPI1_SCK             PB3
+#define PIN_SPI2_SS              PA15
+#define PIN_SPI2_MOSI            PB5
+#define PIN_SPI2_MISO            PB4
+#define PIN_SPI2_SCK             PB3
 
 // SPI2 Definitions
-#define PIN_SPI2_SS              PB12
-#define PIN_SPI2_MOSI            PB15
-#define PIN_SPI2_MISO            PB14
-#define PIN_SPI2_SCK             PB13
+#define PIN_SPI1_SS              PC9
+#define PIN_SPI1_MOSI            PC12
+#define PIN_SPI1_MISO            PC11
+#define PIN_SPI1_SCK             PC10
 
 #define PIN_SPI0_SS              PB12
 #define PIN_SPI0_MOSI            PB15
@@ -163,12 +169,17 @@ extern "C" {
 #define TIMER_SERVO             TIM2  //TODO: advanced-control timers don't work
 
 // UART Definitions
-#define SERIAL_UART_INSTANCE    1
+#define SERIAL_UART_INSTANCE    3
 // Default pin used for 'Serial' instance
 // Mandatory for Firmata
 #define PIN_SERIAL_RX           PA10
 #define PIN_SERIAL_TX           PA9
 
+#define PIN_SERIAL1_RX           PA3
+#define PIN_SERIAL1_TX           PA2//speaker
+
+#define PIN_SERIAL2_TX           PB10
+#define PIN_SERIAL2_RX           PB11
 // USB
 #define USB_DISC_PIN            PB9
 
@@ -246,7 +257,7 @@ VECT_TAB_SRAM
 // SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
 //                            pins are NOT connected to anything by default.
 #define SERIAL_PORT_MONITOR     Serial
-#define SERIAL_PORT_HARDWARE    Serial1
+#define SERIAL_PORT_HARDWARE    Serial
 #endif
 
 #endif /* _VARIANT_ARDUINO_STM32_ */
