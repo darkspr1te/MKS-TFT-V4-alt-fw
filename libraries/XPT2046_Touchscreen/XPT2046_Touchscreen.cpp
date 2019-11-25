@@ -22,7 +22,7 @@
 
 #include "XPT2046_Touchscreen.h"
 
-#define Z_THRESHOLD     400
+#define Z_THRESHOLD     800
 #define Z_THRESHOLD_INT	75
 #define MSEC_THRESHOLD  3
 #define SPI_SETTING     SPISettings(2000000, MSBFIRST, SPI_MODE0)
@@ -104,7 +104,19 @@ static int16_t besttwoavg( int16_t x , int16_t y , int16_t z ) {
 
 // TODO: perhaps a future version should offer an option for more oversampling,
 //       with the RANSAC algorithm https://en.wikipedia.org/wiki/RANSAC
-
+#if defined(STM32F107xC) && defined(MKS_TFT)
+void XPT2046_Touchscreen::calibrate(float ax, float bx, int16_t dx, float ay, float by, int16_t dy, uint16_t dwidth, uint16_t dheight, uint8_t drot) { 
+     alpha_x = ax;
+     beta_x = bx;
+     delta_x = dx;
+     alpha_y = ay;
+     beta_y = by;
+     delta_y = dy;
+     displ_width = dwidth;
+     displ_height = dheight;
+     displ_rot = drot;
+}
+#endif
 void XPT2046_Touchscreen::update()
 {
 	int16_t data[6];
@@ -150,29 +162,83 @@ void XPT2046_Touchscreen::update()
 		//data[0], data[1], data[2], data[3], data[4], data[5]);
 	int16_t x = besttwoavg( data[0], data[2], data[4] );
 	int16_t y = besttwoavg( data[1], data[3], data[5] );
-	
+	//displ_rot =0;
 	//Serial.printf("    %d,%d", x, y);
 	//Serial.println();
 	if (z >= Z_THRESHOLD) {
 		msraw = now;	// good read completed, set wait
-		switch (rotation) {
+		
+		//return;
+		  
+	
+		  if (alpha_x) {                    //if calibration parameters have been
+                                            //defined, calculate pixel coordinates
+               xraw = alpha_x * x + beta_x * y + delta_x;
+               yraw = alpha_y * x + beta_y * y + delta_y;
+               if (displ_rot) {             //and if the screen has been rotated
+                    uint16_t rot_x;
+                    uint16_t rot_y;
+                                            //calculate pixel positions for rotated screen
+                    if (displ_rot == 1) {
+                         rot_x = yraw;
+						 //Serial.println("1");
+                         rot_y = displ_height - xraw;
+                    }
+                    else if (displ_rot == 2) {
+                         rot_x = displ_width - xraw;
+						 //Serial.println("2");
+                         rot_y = displ_height - yraw;
+                    }
+                    else if (displ_rot == 3) {
+                        rot_x = xraw;
+                         rot_y = displ_height - yraw;
+						 //Serial.println("3");
+                    }
+					else if (displ_rot == 4) {
+                         
+						  rot_x = displ_width - yraw;
+						  //Serial.println("4");
+                         rot_y = xraw;
+                    }
+                    xraw = rot_x;
+                    yraw = rot_y;
+               }
+          }
+          else {
+               //xraw = x;
+             //  yraw = y;
+			   switch (rotation) {
 		  case 0:
 			xraw = 4095 - y;
 			yraw = x;
+			//Serial.println("A");
 			break;
 		  case 1:
 			xraw = x;
 			yraw = y;
+			//Serial.println("B");
 			break;
 		  case 2:
 			xraw = y;
+			//Serial.println("C");
 			yraw = 4095 - x;
 			break;
+		  case 3:
+			xraw = x;
+			Serial.println("D");
+			yraw = 4095 - y;
+			
+			break;
 		  default: // 3
+		  break;
 			xraw = 4095 - x;
 			yraw = 4095 - y;
+			Serial.println("1");
 		}
-	}
+          }
+		  
+     }
+	
 }
 
 

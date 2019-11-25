@@ -42,7 +42,7 @@ public:
 class XPT2046_Touchscreen {
 public:
 	constexpr XPT2046_Touchscreen(uint8_t cspin, uint8_t tirq=255)
-		: csPin(cspin), tirqPin(tirq) { }
+		: csPin(cspin), tirqPin(tirq)  { }
 	bool begin();
 	TS_Point getPoint();
 	bool tirqTouched();
@@ -53,12 +53,13 @@ public:
 	void setRotation(uint8_t n) { rotation = n % 4; }
 // protected:
 	volatile bool isrWake=true;
-
+void calibrate(float ax, float bx, int16_t dx, float ay, float by, int16_t dy, uint16_t dwidth, uint16_t dheight, uint8_t drot=0);
 private:
 	void update();
-	uint8_t csPin, tirqPin, rotation=1;
-	int16_t xraw=0, yraw=0, zraw=0;
+	uint8_t csPin, tirqPin, displ_rot=0,rotation=1;
+	int16_t xraw=0, yraw=0, zraw=0,delta_x=0, delta_y=0, displ_width=0, displ_height=0;
 	uint32_t msraw=0x80000000;
+	float alpha_x=0, beta_x=0, alpha_y=0, beta_y=0;
 };
 
 #endif

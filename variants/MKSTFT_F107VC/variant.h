@@ -73,7 +73,7 @@ extern "C" {
 #define PB13 30
 #define PB12 31
 // Other
-#define PB8  32 // BOOT0 - User buttons
+#define PB8  32 //  - User buttons
 #define PB1  33 // LED
 #define PB9  34 // USB DISC
 

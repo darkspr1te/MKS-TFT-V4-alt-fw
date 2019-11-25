@@ -148,7 +148,7 @@ void UTFT::LCD_Write_COM(int VL)
 	if (display_transfer_mode!=1)
 	{
 		cbi(P_RS, B_RS);
-		HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_RESET);
+		//HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_RESET);
 		LCD_Writ_Bus(0x00,VL,display_transfer_mode);
 	}
 	else
@@ -160,7 +160,7 @@ void UTFT::LCD_Write_DATA(char VH,char VL)
 	if (display_transfer_mode!=1)
 	{
 		sbi(P_RS, B_RS);
-		HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
+		//HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
 		LCD_Writ_Bus(VH,VL,display_transfer_mode);
 	}
 	else
@@ -175,7 +175,7 @@ void UTFT::LCD_Write_DATA(char VL)
 	if (display_transfer_mode!=1)
 	{
 		sbi(P_RS, B_RS);
-		HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
+		//HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
 		LCD_Writ_Bus(0x00,VL,display_transfer_mode);
 	}
 	else
@@ -199,9 +199,16 @@ void UTFT::LCD_Write_COM_DATA(char com1,int dat1)
 
 int  UTFT::readID(void)
 {
-    LCD_Write_COM_DATA(0x00,0x0001);
-    LCD_delay_ms(50); // delay 50 ms 
-    return LCD_ReadData();
+    //LCD_Write_COM_DATA(0x00,0x0);
+	//LCD_Write_COM(0x2e);
+#ifdef STM32F107xC
+	LCD_Write_COM(0x4);
+    LCD_delay_ms(50); // delay 50 ms
+    //first BYTE  is dummy  	
+	int first_read =LCD_ReadData();
+	int second_read =LCD_ReadData();
+#endif
+   return 	(uint16_t)(second_read);
 }			  
 
 void UTFT::Init(byte orientation)
@@ -233,7 +240,7 @@ void UTFT::Init(byte orientation)
 	delay(15);
 	sbi(P_RST, B_RST);
 	delay(15);
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 	cbi(P_CS, B_CS);
 	#endif
   #endif
@@ -379,7 +386,7 @@ void UTFT::Init(byte orientation)
 	#include "tft_drivers/ili9320/initlcd.h"
 #endif
 	}
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 	sbi (P_CS, B_CS); 
 
 	setColor(255, 255, 255);
@@ -402,92 +409,92 @@ void UTFT::setXY(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 	switch(display_model)
 	{
 #ifndef DISABLE_HX8347A
-	//#include "tft_drivers/hx8347a/setxy.h"
+	#include "tft_drivers/hx8347a/setxy.h"
 #endif
 #ifndef DISABLE_HX8352A
-	//#include "tft_drivers/hx8352a/setxy.h"
+	#include "tft_drivers/hx8352a/setxy.h"
 	
 #endif
 #ifndef DISABLE_ILI9327
-	//#include "tft_drivers/ili9327/setxy.h"
+	#include "tft_drivers/ili9327/setxy.h"
 #endif
 #ifndef DISABLE_SSD1289
-	//#include "tft_drivers/ssd1289/setxy.h"
+	#include "tft_drivers/ssd1289/setxy.h"
 #endif
 #ifndef DISABLE_ILI9325C
-	//#include "tft_drivers/ili9325c/setxy.h"
+	#include "tft_drivers/ili9325c/setxy.h"
 #endif
 #ifndef DISABLE_ILI9325D
-	//#include "tft_drivers/ili9325d/default/setxy.h"
+	#include "tft_drivers/ili9325d/default/setxy.h"
 #endif
 #ifndef DISABLE_ILI9325D_ALT
-	//#include "tft_drivers/ili9325d/alt/setxy.h"
+	#include "tft_drivers/ili9325d/alt/setxy.h"
 #endif
 #ifndef DISABLE_HX8340B_8
-	//#include "tft_drivers/hx8340b/8/setxy.h"
+	#include "tft_drivers/hx8340b/8/setxy.h"
 #endif
 #ifndef DISABLE_HX8340B_S
-	//#include "tft_drivers/hx8340b/s/setxy.h"
+	#include "tft_drivers/hx8340b/s/setxy.h"
 #endif
 #ifndef DISABLE_ST7735
-	//#include "tft_drivers/st7735/std/setxy.h"
+	#include "tft_drivers/st7735/std/setxy.h"
 #endif
 #ifndef DISABLE_ST7735_ALT
-	//#include "tft_drivers/st7735/alt/setxy.h"
+	#include "tft_drivers/st7735/alt/setxy.h"
 #endif
 #ifndef DISABLE_S1D19122
-	//#include "tft_drivers/s1d19122/setxy.h"
+	#include "tft_drivers/s1d19122/setxy.h"
 #endif
 #ifndef DISABLE_PCF8833
-	//#include "tft_drivers/pcf8833/setxy.h"
+	#include "tft_drivers/pcf8833/setxy.h"
 #endif
 #ifndef DISABLE_SSD1963_480
-	//#include "tft_drivers/ssd1963/480/setxy.h"
+	#include "tft_drivers/ssd1963/480/setxy.h"
 #endif
 #ifndef DISABLE_SSD1963_800
-	//#include "tft_drivers/ssd1963/800/setxy.h"
+	#include "tft_drivers/ssd1963/800/setxy.h"
 #endif
 #ifndef DISABLE_SSD1963_800_ALT
-//	#include "tft_drivers/ssd1963/800alt/setxy.h"
+	#include "tft_drivers/ssd1963/800alt/setxy.h"
 #endif
 #ifndef DISABLE_S6D1121
-	//#include "tft_drivers/s6d1121/setxy.h"
+	#include "tft_drivers/s6d1121/setxy.h"
 #endif
 #ifndef DISABLE_ILI9481
-	//#include "tft_drivers/ili9481/setxy.h"
+	#include "tft_drivers/ili9481/setxy.h"
 #endif
 #ifndef DISABLE_S6D0164
-	//#include "tft_drivers/s6d0164/setxy.h"
+	#include "tft_drivers/s6d0164/setxy.h"
 #endif
 #ifndef DISABLE_ST7735S
-	//#include "tft_drivers/st7735s/setxy.h"
+	#include "tft_drivers/st7735s/setxy.h"
 #endif
 #ifndef DISABLE_ILI9341_S4P
-	//#include "tft_drivers/ili9341/s4p/setxy.h"
+	#include "tft_drivers/ili9341/s4p/setxy.h"
 #endif
 #ifndef DISABLE_ILI9341_S5P
-	//#include "tft_drivers/ili9341/s5p/setxy.h"
+	#include "tft_drivers/ili9341/s5p/setxy.h"
 #endif
 #ifndef DISABLE_ILI9341_16
-	//#include "tft_drivers/ili9341/setxy.h"
+	#include "tft_drivers/ili9341/setxy.h"
 #endif
 #ifndef DISABLE_R61581
-	//#include "tft_drivers/r61581/setxy.h"
+	#include "tft_drivers/r61581/setxy.h"
 #endif
 #ifndef DISABLE_ILI9486
-	//#include "tft_drivers/ili9486/setxy.h"
+	#include "tft_drivers/ili9486/setxy.h"
 #endif
 #ifndef DISABLE_CPLD
-	//#include "tft_drivers/cpld/setxy.h"
+	#include "tft_drivers/cpld/setxy.h"
 #endif
 #ifndef DISABLE_HX8353C
 	#include "tft_drivers/hx8353c/setxy.h"
 #endif
 #ifndef DISABLE_ILI9320
-	//#include "tft_drivers/ili9320/setxy.h"
+	#include "tft_drivers/ili9320/setxy.h"
 #endif
 #ifndef DISABLE_SPFD5420
-	//#include "tft_drivers/SPFD5420/setxy.h"
+	#include "tft_drivers/SPFD5420/setxy.h"
 #endif
 	}
 }
@@ -565,10 +572,10 @@ void UTFT::fillRect(int x1, int y1, int x2, int y2)
 		
 		cbi(P_CS, B_CS);
 		setXY(x1, y1, x2, y2);
-		HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
+		//HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
 		sbi(P_RS, B_RS);
 		_fast_fill_8(fch,((long(x2-x1)+1)*(long(y2-y1)+1)));
-		HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+		//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 		sbi(P_CS, B_CS);
 		
 	}
@@ -672,7 +679,7 @@ void UTFT::drawCircle(int x, int y, int radius)
 		setXY(x - y1, y - x1, x - y1, y - x1);
 		LCD_Write_DATA(fch,fcl);
 	}
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 	sbi(P_CS, B_CS);
 	clrXY();
 }
@@ -716,7 +723,7 @@ void UTFT::clrScr()
 			}
 		}
 	}
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 	//sbi(P_CS, B_CS);
 	
 }
@@ -751,14 +758,13 @@ void UTFT::fillScr(uint16_t color)
 		else
 		{
 			setXY(0,0,disp_y_size+1,disp_x_size+1);
-		_fast_fill_8(color,((disp_y_size+1)*(disp_x_size+1)));
+		//_fast_fill_16(ch,cl,((disp_y_size+1)*(disp_x_size+1)));
+		_fast_fill_16(ch,cl,((disp_x_size+1)*(disp_y_size+1)));
+		
 	}
 		//_fast_fill_16(ch,cl,((disp_x_size+1)*(disp_y_size+1)));
 		//_fast_fill_8(ch,((319+1)*(239+1)));
-	//	Serial1.println("disp X size:");
-	//	Serial1.println(disp_x_size);
-	//	Serial1.println(" disp y size:");
-	//	Serial1.println(disp_y_size);
+	//
 		
 	#else
 	cbi(P_CS, B_CS);
@@ -784,7 +790,7 @@ void UTFT::fillScr(uint16_t color)
 			}
 		}
 	}
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 
 	sbi(P_CS, B_CS);
 	#endif
@@ -844,7 +850,7 @@ void UTFT::drawPixel(int x, int y)
 	cbi(P_CS, B_CS);
 	setXY(x, y, x, y);
 	setPixel((fch<<8)|fcl);
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 	sbi(P_CS, B_CS);
 	clrXY();
 }
@@ -917,13 +923,13 @@ void UTFT::drawHLine(int x, int y, int l)
 	setXY(x, y, x+l, y);
 	if (display_transfer_mode == 16)
 	{
-		HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
+		
 		sbi(P_RS, B_RS);
 		_fast_fill_16(fch,fcl,l);
 	}
 	else if ((display_transfer_mode==8) and (fch==fcl))
 	{
-		HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
+		
 		sbi(P_RS, B_RS);
 		_fast_fill_8(fch,l);
 	}
@@ -934,7 +940,7 @@ void UTFT::drawHLine(int x, int y, int l)
 			LCD_Write_DATA(fch, fcl);
 		}
 	}
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 	sbi(P_CS, B_CS);
 	clrXY();
 }
@@ -951,13 +957,15 @@ void UTFT::drawVLine(int x, int y, int l)
 	setXY(x, y, x, y+l);
 	if (display_transfer_mode == 16)
 	{
-		HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
+		
+		//HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
 		sbi(P_RS, B_RS);
 		_fast_fill_16(fch,fcl,l);
 	}
 	else if ((display_transfer_mode==8) and (fch==fcl))
 	{
-		HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
+		return;
+		//HAL_GPIO_WritePin(LCD_RS_GPIO_Port,LCD_RS_Pin, GPIO_PIN_SET);
 		sbi(P_RS, B_RS);
 		_fast_fill_8(fch,l);
 	}
@@ -965,10 +973,11 @@ void UTFT::drawVLine(int x, int y, int l)
 	{
 		for (int i=0; i<l+1; i++)
 		{
+			
 			LCD_Write_DATA(fch, fcl);
 		}
 	}
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 	sbi(P_CS, B_CS);
 	clrXY();
 }
@@ -1052,7 +1061,7 @@ void UTFT::printChar(byte c, int x, int y)
 			temp+=(cfont.x_size/8);
 		}
 	}
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 	sbi(P_CS, B_CS);
 	clrXY();
 }
@@ -1093,7 +1102,7 @@ void UTFT::rotateChar(byte c, int x, int y, int pos, int deg)
 		}
 		temp+=(cfont.x_size/8);
 	}
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 	sbi(P_CS, B_CS);
 	clrXY();
 }
@@ -1372,7 +1381,7 @@ void UTFT::drawBitmap(int x, int y, int sx, int sy, bitmapdatatype data, int deg
 
 int UTFT::getDisplayXSize()
 {
-	if (orient==PORTRAIT)
+	if (orient==LANDSCAPE)
 		return disp_x_size+1;
 	else
 		return disp_y_size+1;
@@ -1380,7 +1389,7 @@ int UTFT::getDisplayXSize()
 
 int UTFT::getDisplayYSize()
 {
-	if (orient==PORTRAIT)
+	if (orient==LANDSCAPE)
 		return disp_y_size+1;
 	else
 		return disp_x_size+1;
@@ -1391,12 +1400,14 @@ int UTFT::getDisplayYSize()
 
 void UTFT::lcdOff()
 {
-	
+	LCD_Write_COM(0x35);
+	LCD_Write_DATA(0x00);
+	return;
 	cbi(P_CS, B_CS);
 	LCD_Write_COM(0x28);
-	HAL_GPIO_WritePin(FILAMENT_DI_GPIO_Port,FILAMENT_DI_Pin, GPIO_PIN_RESET);
+	
 		delay(10);
-		HAL_GPIO_WritePin(FILAMENT_DI_GPIO_Port,FILAMENT_DI_Pin, GPIO_PIN_SET);
+
 	return;
 	switch (display_model)
 	{
@@ -1404,21 +1415,16 @@ void UTFT::lcdOff()
 		LCD_Write_COM(0x28);
 		break;
 	case CPLD:
-		//LCD_Write_COM_DATA(0x01,0x0000);
-		//LCD_Write_COM(0x0F);   
+		LCD_Write_COM_DATA(0x01,0x0000);
+		LCD_Write_COM(0x0F);   
 		break;
 	case HX8353C:
 		LCD_Write_COM(0x21);
-		/*HAL_GPIO_WritePin(FILAMENT_DI_GPIO_Port,FILAMENT_DI_Pin, GPIO_PIN_RESET);
-		delay(10);
-		HAL_GPIO_WritePin(FILAMENT_DI_GPIO_Port,FILAMENT_DI_Pin, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(FILAMENT_DI_GPIO_Port,FILAMENT_DI_Pin, GPIO_PIN_RESET);
-		delay(1);
-		HAL_GPIO_WritePin(FILAMENT_DI_GPIO_Port,FILAMENT_DI_Pin, GPIO_PIN_SET);*/
+	
 		break;
 	}
 	sbi(P_CS, B_CS);
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 }
 
 void UTFT::lcdOn()
@@ -1439,17 +1445,27 @@ void UTFT::lcdOn()
 		break;
 	case HX8353C:
 		LCD_Write_COM(0x20);
-	/*	HAL_GPIO_WritePin(FILAMENT_DI_GPIO_Port,FILAMENT_DI_Pin, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(POWER_DI_GPIO_Port,POWER_DI_Pin, GPIO_PIN_RESET);
-		delay(10);
-		HAL_GPIO_WritePin(FILAMENT_DI_GPIO_Port,FILAMENT_DI_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(POWER_DI_GPIO_Port,POWER_DI_Pin, GPIO_PIN_SET);*/
+	
 		break;
 	}
 	sbi(P_CS, B_CS);
-	HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(LCD_nCS_GPIO_Port,LCD_nCS_Pin, GPIO_PIN_SET);
 }
 #endif
+
+void UTFT::h_write_COM(int thing)
+{
+	LCD_Write_COM(thing);
+}
+void UTFT::h_write_DATA(int thing)
+{
+	LCD_Write_DATA(thing);
+}
+int UTFT::h_read_DATA(void)
+{
+	return LCD_ReadData();
+}
+
 void UTFT::setContrast(char c)
 {
 	cbi(P_CS, B_CS);

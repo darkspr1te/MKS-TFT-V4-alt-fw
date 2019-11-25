@@ -2,6 +2,7 @@ case HX8353C:
 	
 //new init
 #if defined(STM32F107xC)
+
 		LCD_Write_COM(0xFE);                     // lcd Type check
       LCD_Write_COM(0xEF);
       LCD_Write_COM(0x36);
