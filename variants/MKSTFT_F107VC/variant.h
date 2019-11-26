@@ -37,7 +37,9 @@ extern "C" {
 /*----------------------------------------------------------------------------
  *        Pins
  *----------------------------------------------------------------------------*/
-
+#if defined(HAL_ETH_MODULE_ENABLED)
+#undef HAL_ETH_MODULE_ENABLED
+#endif
 // Right side
 #define PB11 0
 #define PB10 1
@@ -98,6 +100,12 @@ extern "C" {
 #define PC11 53
 #define PC12 54
 #define PC13 55
+#define PD8 56
+#define PD9 57
+#define PD10 58
+#define PD11 59
+#define PD5 60
+#define PD6 61
 
 
 #define TOUCH_SCK PC10
@@ -122,8 +130,11 @@ extern "C" {
 #define POWER_Pin POWER
 #define EEPROM_CS PIN_SPI2_SS
 
+#define SERIALRX2 PD8 //uart 3 alt config
+#define SERIALTX2 PD9//uart 3 alt config
+
 // This must be a literal
-#define NUM_DIGITAL_PINS        55
+#define NUM_DIGITAL_PINS        62 //dont forget to update this when adding new pins to pinarray darkspr1te- segfault hey 
 // This must be a literal with a value less than or equal to to MAX_ANALOG_INPUTS
 #define NUM_ANALOG_INPUTS       9
 #define NUM_ANALOG_FIRST        35
@@ -131,7 +142,7 @@ extern "C" {
 // On-board LED pin number
 #define LED_BUILTIN             PD14
 #define LED_GREEN               LED_BUILTIN
-#define LED_RED  PB1
+#define LED_RED  PB0
 
 // SPI Definitions
 #define PIN_SPI_SS              PA4
@@ -169,17 +180,17 @@ extern "C" {
 #define TIMER_SERVO             TIM2  //TODO: advanced-control timers don't work
 
 // UART Definitions
-#define SERIAL_UART_INSTANCE    3
+#define SERIAL_UART_INSTANCE    1
 // Default pin used for 'Serial' instance
 // Mandatory for Firmata
-#define PIN_SERIAL_RX           PA10
-#define PIN_SERIAL_TX           PA9
+#define PIN_SERIAL_RX           PA10//def usart1 wifi rx labels are correct for tx/rx
+#define PIN_SERIAL_TX           PA9//def usart1 wifi tx 
 
-#define PIN_SERIAL1_RX           PA3
-#define PIN_SERIAL1_TX           PA2//speaker
+#define PIN_SERIAL2_RX           PD6//uart2 connect to AUX-1 //PA3//PA3//
+#define PIN_SERIAL2_TX           PD5//uart2 connect to AUX-1 //PA2//PA2 speaker
 
-#define PIN_SERIAL2_TX           PB10
-#define PIN_SERIAL2_RX           PB11
+#define PIN_SERIAL3_TX           PD8 //PB10 //wifi txd // uart 3 default config PD9 label on board are swapped for tx/rx 
+#define PIN_SERIAL3_RX           PD9 //PB11 //wifi rxd //uart 3 defualt config 
 // USB
 #define USB_DISC_PIN            PB9
 
@@ -258,6 +269,7 @@ VECT_TAB_SRAM
 //                            pins are NOT connected to anything by default.
 #define SERIAL_PORT_MONITOR     Serial
 #define SERIAL_PORT_HARDWARE    Serial
+//#define SERIAL_PORT_HARDWARE_OPEN Serial3
 #endif
 
 #endif /* _VARIANT_ARDUINO_STM32_ */

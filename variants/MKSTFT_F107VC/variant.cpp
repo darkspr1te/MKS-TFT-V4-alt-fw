@@ -95,7 +95,12 @@ const PinName digitalPin[] = {
   PC_11,//D53
   PC_12,//D54
   PC_13,//D55
-  
+  PD_8,//D56
+  PD_9,//D57
+  PD_10,//D58
+  PD_11,//D59
+  PD_5,//D60
+  PD_6,//D61
 
   // Duplicated pins to avoid issue with analogRead
   // A0 have to be greater than NUM_ANALOG_INPUTS
